@@ -6,12 +6,11 @@
     
     <meta charset="utf-8" />
     <meta name="author" content="Just van den Broecke">
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link href="css/leaflet-gps.min.css" rel="stylesheet" />"" />
-
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <!-- by https://github.com/stefanocudini/leaflet-gps  -->
+    <link href="css/leaflet.css" rel="stylesheet" />
+   
+    <link href="css/leaflet-gps.min.css" rel="stylesheet" />
+    <script src="scripts/leaflet.js"></script>
+   
     <script src="scripts/leaflet-gps.min.js"></script>
     <style>
         html, body {
@@ -50,27 +49,84 @@
 <body function="onLoad()">
     <div id="map"></div>
     <script>
-       
 
-    var map = L.map('map');
-    map.setView([52.312, 5.6], 9);
-    // var mapUrl = 'http://4umaps.eu/{z}/{x}/{y}.png';
-    var mapUrl = 'http://s.map5.nl/map/gast/tiles/opentopo/EPSG900913/{z}/{x}/{y}.jpeg';
-
-    // Voeg kaart toe
-    L.tileLayer(mapUrl, {
-        tms: false,
+    // Layer defs
+    var opentopo = L.tileLayer(
+        // 'http://ws.nlextract.nl/gwc/service/tms/1.0.0/opentopo@EPSG:900913@png/{z}/{x}/{y}.png',
+        'http://s.map5.nl/map/gast/tiles/opentopo/EPSG900913/{z}/{x}/{y}.jpeg', {
+        // tms: true,
         maxZoom: 18,
         continuousWorld: true,
         detectRetina: false,
         attribution: 'CC by CA <a href="http://www.opentopo.nl">OpenTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
-    }).addTo(map);
+    });
 
-    var newStyle = {radius: 25, weight:4, color: '#f0c', fill: true, opacity:0.8};
+    var eu = L.tileLayer(
+            'http://4umaps.eu/{z}/{x}/{y}.png', {
+         tms: false,
+         maxZoom: 16,
+         continuousWorld: true,
+         detectRetina: false,
+         attribution: '<a href="http://4umaps.eu">4umaps.eu</a>'
+     });
 
+    var bonne1900 = L.tileLayer(
+             'http://gis.opentraces.org/gwc/service/tms/1.0.0/bonne1900@EPSG:900913@png/{z}/{x}/{y}.png', {
+         tms: true,
+         maxZoom: 18,
+         continuousWorld: true,
+         detectRetina: false,
+         attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+     });
 
+        // Overlay layers
+    var fietsknooppunten = L.tileLayer.wms('http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?SERVICE=WMS&knooppunten', {
+        layers: 'knooppunten',
+        minZoom: 12,
+        maxZoom: 18,
+        format: 'image/png',
+        transparent: true,
+        attribution: 'PDOK Knooppunten'
+    });
 
-    map.addControl( new L.Control.Gps({style: newStyle }) );//inizialize control
+    var fietsknooppuntlijnen = L.tileLayer.wms('http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?SERVICE=WMS&netwerken', {
+        layers: 'netwerken',
+        minZoom: 12, 
+        maxZoom: 18,
+        format: 'image/png',
+        transparent: true,
+        attribution: 'PDOK Knooppuntlijnen'
+    });
+
+   
+
+    // grouping the layers
+    var baseLayers = {
+        "OSM-TopoMap (EU)": eu,
+ //       "Trentino (IT)": trentino,
+//        "IGN Topo (FR)": ign,
+        "Dutch Historic 1900 (NL)": bonne1900,
+        "OpenTopo (NL)": opentopo
+    };
+
+    var overlayLayers = {
+        "Fietsknooppunten": fietsknooppunten,
+        "Fietsknooppuntlijnen": fietsknooppuntlijnen
+    };
+
+    // Create the map
+    var map = L.map('map', {
+        center: new L.LatLng(52.312, 5.1),
+        zoom: 9,
+        layers: [opentopo, fietsknooppunten, fietsknooppuntlijnen]
+    });
+
+    L.control.layers(baseLayers, overlayLayers).addTo(map);
+    //var selCtrl = L.control.selectLayers(baseLayers, overlayLayers).addTo(map);
+
+    // Add controls to the map
+   	map.addControl( new L.Control.Gps({style: {radius: 25, weight:4, color: '#f0c', fill: true, opacity:0.8} }) );
+
 
     </script>
     <!-- Cordova reference, this is added to your app when it's built. -->
