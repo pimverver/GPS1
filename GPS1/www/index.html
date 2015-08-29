@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>OpenTopo - 37.5/200/400/800/1600px/km - OSM/Google Tiles</title>
+    <script src="scripts/winstore-jscompat.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
     <meta charset="utf-8" />
@@ -9,6 +10,7 @@
     <link href="css/leaflet.css" rel="stylesheet" />
    
     <link href="css/leaflet-gps.min.css" rel="stylesheet" />
+    
     <script src="scripts/leaflet.js"></script>
    
     <script src="scripts/leaflet-gps.min.js"></script>
@@ -70,9 +72,18 @@
          attribution: '<a href="http://4umaps.eu">4umaps.eu</a>'
      });
 
+    var opensimpletopo = L.tileLayer(
+        'http://s.map5.nl/map/gast/tiles/opensimpletopo/EPSG900913/{z}/{x}/{y}.jpeg', {
+            // tms: true,
+            maxZoom: 18,
+            continuousWorld: true,
+            detectRetina: false,
+            attribution: 'CC by CA <a href="http://www.opensimpletopo.nl">OpenTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
+        });
+
     var bonne1900 = L.tileLayer(
-             'http://gis.opentraces.org/gwc/service/tms/1.0.0/bonne1900@EPSG:900913@png/{z}/{x}/{y}.png', {
-         tms: true,
+             'http://s.map5.nl/map/gast/tiles//bonne_1900/EPSG900913/{z}/{x}/{y}.png', {
+         //tms: true,
          maxZoom: 18,
          continuousWorld: true,
          detectRetina: false,
@@ -106,7 +117,8 @@
  //       "Trentino (IT)": trentino,
 //        "IGN Topo (FR)": ign,
         "Dutch Historic 1900 (NL)": bonne1900,
-        "OpenTopo (NL)": opentopo
+        "OpenTopo (NL)": opentopo,
+        "OpenSimpleTopo (NL)": opensimpletopo
     };
 
     var overlayLayers = {
