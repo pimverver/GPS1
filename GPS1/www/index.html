@@ -54,8 +54,7 @@
 
     // Layer defs
     var opentopo = L.tileLayer(
-        // 'http://ws.nlextract.nl/gwc/service/tms/1.0.0/opentopo@EPSG:900913@png/{z}/{x}/{y}.png',
-        'http://s.map5.nl/map/gast/tiles/opentopo/EPSG900913/{z}/{x}/{y}.jpeg', {
+         'http://s.map5.nl/map/gast/tiles/opentopo/EPSG900913/{z}/{x}/{y}.jpeg', {
         // tms: true,
         maxZoom: 18,
         continuousWorld: true,
@@ -78,17 +77,17 @@
             maxZoom: 18,
             continuousWorld: true,
             detectRetina: false,
-            attribution: 'CC by CA <a href="http://www.opensimpletopo.nl">OpenTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
+            attribution: 'CC by CA <a href="http://www.opensimpletopo.nl">OpenSimpleTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
         });
 
     var bonne1900 = L.tileLayer(
-             'http://s.map5.nl/map/gast/tiles//bonne_1900/EPSG900913/{z}/{x}/{y}.png', {
-         //tms: true,
-         maxZoom: 18,
-         continuousWorld: true,
-         detectRetina: false,
-         attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
-     });
+             'http://s.map5.nl/map/gast/tiles/bonne_1900/EPSG900913/{z}/{x}/{y}.png', {
+                 //tms: true,
+                 maxZoom: 18,
+                 continuousWorld: true,
+                 detectRetina: false,
+                 attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+             });
 
         // Overlay layers
     var fietsknooppunten = L.tileLayer.wms('http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?SERVICE=WMS&knooppunten', {
@@ -122,15 +121,16 @@
     };
 
     var overlayLayers = {
-        "Fietsknooppunten": fietsknooppunten,
-        "Fietsknooppuntlijnen": fietsknooppuntlijnen
+        "Fietsknooppuntlijnen": fietsknooppuntlijnen,
+        "Fietsknooppunten": fietsknooppunten
     };
 
     // Create the map
     var map = L.map('map', {
         center: new L.LatLng(52.312, 5.1),
         zoom: 9,
-        layers: [opentopo, fietsknooppunten, fietsknooppuntlijnen]
+        
+        layers: [opentopo, fietsknooppuntlijnen, fietsknooppunten]
     });
 
     L.control.layers(baseLayers, overlayLayers).addTo(map);
