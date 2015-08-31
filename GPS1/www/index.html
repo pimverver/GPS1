@@ -80,6 +80,15 @@
             attribution: 'CC by CA <a href="http://www.opensimpletopo.nl">OpenSimpleTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
         });
 
+    var openlufo = L.tileLayer(
+        'http://s.map5.nl/map/gast/tiles/openlufo/EPSG900913/{z}/{x}/{y}.jpeg', {
+            // tms: true,
+            maxZoom: 18,
+            continuousWorld: true,
+            detectRetina: false,
+            attribution: 'CC by CA <a href="http://www.opensimpletopo.nl">OpenSimpleTopo</a> - <a href=http://openstreetmap.org>OpenStreetMap</a>'
+        });
+
     var bonne1900 = L.tileLayer(
              'http://s.map5.nl/map/gast/tiles/bonne_1900/EPSG900913/{z}/{x}/{y}.png', {
                  //tms: true,
@@ -89,6 +98,51 @@
                  attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
              });
 
+    var bonne1925 = L.tileLayer(
+         'http://s.map5.nl/map/gast/tiles/bonne_1925/EPSG900913/{z}/{x}/{y}.png', {
+             //tms: true,
+             maxZoom: 18,
+             continuousWorld: true,
+             detectRetina: false,
+             attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+         });
+
+    var tmk_1850 = L.tileLayer(
+        'http://s.map5.nl/map/gast/tiles/tmk_1850/EPSG900913/{z}/{x}/{y}.png', {
+        //tms: true,
+        maxZoom: 18,
+        continuousWorld: true,
+        detectRetina: false,
+        attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+    });
+
+    var bonne1949 = L.tileLayer(
+    'http://s.map5.nl/map/gast/tiles/bonne_1949/EPSG900913/{z}/{x}/{y}.png', {
+        //tms: true,
+        maxZoom: 18,
+        continuousWorld: true,
+        detectRetina: false,
+        attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+    });
+
+    var topraster = L.tileLayer(
+        'http://s.map5.nl/map/gast/tiles/topraster/EPSG900913/{z}/{x}/{y}.jpeg', {
+        //tms: true,
+        maxZoom: 18,
+        continuousWorld: true,
+        detectRetina: false,
+        attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+    });
+
+    var relief_struct = L.tileLayer(
+        'http://s.map5.nl/map/gast/tiles/relief_struct/EPSG900913/{z}/{x}/{y}.jpeg', {
+        //tms: true,
+        maxZoom: 18,
+        continuousWorld: true,
+        detectRetina: false,
+        attribution: '<a href="http://www.kadaster.nl">Bonne</a>'
+    });
+    
         // Overlay layers
     var fietsknooppunten = L.tileLayer.wms('http://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?SERVICE=WMS&knooppunten', {
         layers: 'knooppunten',
@@ -113,11 +167,15 @@
     // grouping the layers
     var baseLayers = {
         "OSM-TopoMap (EU)": eu,
- //       "Trentino (IT)": trentino,
-//        "IGN Topo (FR)": ign,
-        "Dutch Historic 1900 (NL)": bonne1900,
         "OpenTopo (NL)": opentopo,
-        "OpenSimpleTopo (NL)": opensimpletopo
+        "OpenSimpleTopo (NL)": opensimpletopo,
+        "Raster (NL)": topraster,
+        "Hoogtekaart": relief_struct,
+        "Open luchtfoto": openlufo,
+        "Dutch Historic 1900 (NL)": bonne1900,
+        "Dutch Historic 1925 (NL)": bonne1925,
+        "Dutch Historic 1949 (NL)": bonne1949,
+        "Militaire stafkaart 1850": tmk_1850
     };
 
     var overlayLayers = {
